@@ -8,14 +8,14 @@ import Translation
 open class TranslateManager: NSObject {
     
     @MainActor @objc public static let shared = TranslateManager()
-    @MainActor private var viewModel = ViewModel()
+    @MainActor private static var viewModel = ViewModel()
     
     
     @objc public static func preferences(langPacks: Array<String> = ["en"], completion: @escaping (String) -> Void) {      // Callback String - Error code
         
     }
     
-    @MainActor @objc public func getAvailableLangModels(completion: @escaping ([String]) -> Void) {
+    @MainActor @objc public static func getAvailableLangModels(completion: @escaping ([String]) -> Void) {
         var availableLanguages : Array<String> = []
         viewModel.availableLanguages.forEach { language in
             availableLanguages.append(language.localizedName())
