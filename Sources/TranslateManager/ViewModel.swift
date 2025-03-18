@@ -6,24 +6,32 @@
 //
 
 import Foundation
-import Translation
+@preconcurrency import Translation
 
-@Observable
+@MainActor
 class ViewModel {
     var translatedText = ""
     var isTranslationSupported: Bool?
+    var selectedFrom: Locale.Language?
+    var selectedTo: Locale.Language?
     
     var availableLanguages: [AvailableLanguage] = []
 
-    init() async {
-        await prepareSupportedLanguages()
+    var selectedLanguagePair: LanguagePair {
+        LanguagePair(selectedFrom: selectedFrom, selectedTo: selectedTo)
+    }
+    
+    init() {
+        prepareSupportedLanguages()
     }
 
-    func prepareSupportedLanguages() async {
-        let supportedLanguages = await LanguageAvailability().supportedLanguages
-        availableLanguages = supportedLanguages.map {
-            AvailableLanguage(locale: $0)
-        }.sorted()
+    func prepareSupportedLanguages() {
+        Task { @MainActor in
+            let supportedLanguages = await LanguageAvailability().supportedLanguages
+            availableLanguages = supportedLanguages.map {
+                AvailableLanguage(locale: $0)
+            }.sorted()
+        }
     }
 }
 
@@ -40,5 +48,14 @@ extension ViewModel {
         @unknown default:
             print("Not supported")
         }
+    }
+}
+
+struct LanguagePair: Equatable {
+    var selectedFrom: Locale.Language?
+    var selectedTo: Locale.Language?
+    
+    static func == (lhs: LanguagePair, rhs: LanguagePair) -> Bool {
+        return lhs.selectedFrom == rhs.selectedFrom && lhs.selectedTo == rhs.selectedTo
     }
 }
