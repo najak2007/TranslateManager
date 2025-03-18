@@ -7,7 +7,7 @@ import Translation
 @objc(TranslateManager)
 open class TranslateManager: NSObject {
     
-    @objc public let shared = TranslateManager()
+    @MainActor @objc public static let shared = TranslateManager()
     @MainActor private var viewModel = ViewModel()
     
     
