@@ -7,15 +7,15 @@ import Translation
 @objc(TranslateManager)
 open class TranslateManager: NSObject {
     
-    @objc let shared = TranslateManager()
+    @objc public let shared = TranslateManager()
     @MainActor private var viewModel = ViewModel()
     
     
-    @objc static func preferences(langPacks: Array<String> = ["en"], completion: @escaping (String) -> Void) {      // Callback String - Error code
+    @objc public static func preferences(langPacks: Array<String> = ["en"], completion: @escaping (String) -> Void) {      // Callback String - Error code
         
     }
     
-    @MainActor @objc func getAvailableLangModels(completion: @escaping ([String]) -> Void) {
+    @MainActor @objc public func getAvailableLangModels(completion: @escaping ([String]) -> Void) {
         var availableLanguages : Array<String> = []
         viewModel.availableLanguages.forEach { language in
             availableLanguages.append(language.localizedName())
