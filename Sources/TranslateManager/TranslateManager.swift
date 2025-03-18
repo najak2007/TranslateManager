@@ -5,7 +5,7 @@ import Translation
 
 @available(iOS 18.0, *)
 @objc(TranslateManager)
-class TranslateManager: NSObject {
+open class TranslateManager: NSObject {
     
     @objc let shared = TranslateManager()
     @MainActor private var viewModel = ViewModel()
