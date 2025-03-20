@@ -6,16 +6,17 @@ import Translation
 @available(iOS 18.0, *)
 @objc(TranslateManager)
 open class TranslateManager: NSObject {
-    
-    @MainActor private static var viewModel = ViewModel()
-    
+    static let viewModel = ViewModel()
+
     @objc public static func preferences(langPacks: Array<String> = ["en"], completion: @escaping (String) -> Void) {      // Callback String - Error code
         
     }
     
-    @MainActor @objc public static func getAvailableLangModels(completion: @escaping ([String]) -> Void) {
+    @objc public func getAvailableLangModels(completion: @escaping ([String]) -> Void) async {
         var availableLanguages : Array<String> = []
-        viewModel.availableLanguages.forEach { language in
+        let supportedLanguages = await TranslateManager.viewModel.prepareSupportedLanguages()
+        
+        supportedLanguages.forEach { language in
             availableLanguages.append(language.localizedName())
         }
         completion(availableLanguages)

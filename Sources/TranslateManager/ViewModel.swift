@@ -8,30 +8,23 @@
 import Foundation
 @preconcurrency import Translation
 
-@MainActor
-class ViewModel {
+actor ViewModel {
     var translatedText = ""
     var isTranslationSupported: Bool?
     var selectedFrom: Locale.Language?
     var selectedTo: Locale.Language?
     
-    var availableLanguages: [AvailableLanguage] = []
-
     var selectedLanguagePair: LanguagePair {
         LanguagePair(selectedFrom: selectedFrom, selectedTo: selectedTo)
     }
     
-    init() {
-        prepareSupportedLanguages()
-    }
+    init() {}
 
-    func prepareSupportedLanguages() {
-        Task { @MainActor in
-            let supportedLanguages = await LanguageAvailability().supportedLanguages
-            availableLanguages = supportedLanguages.map {
-                AvailableLanguage(locale: $0)
-            }.sorted()
-        }
+    func prepareSupportedLanguages() async -> [AvailableLanguage] {
+        let supportedLanguages = await LanguageAvailability().supportedLanguages
+        return supportedLanguages.map {
+            AvailableLanguage(locale: $0)
+        }.sorted()
     }
 }
 
