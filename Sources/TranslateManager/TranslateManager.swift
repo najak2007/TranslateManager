@@ -12,7 +12,7 @@ open class TranslateManager: NSObject {
         
     }
     
-    @objc public func getAvailableLangModels() async -> Array<String> {
+    @objc public static func getAvailableLangModels() async -> Array<String> {
         var availableLanguages : Array<String> = []
         let supportedLanguages = await TranslateManager.viewModel.prepareSupportedLanguages()
         
