@@ -12,9 +12,10 @@ struct AvailableLanguage: Identifiable, Hashable, Comparable {
     let locale: Locale.Language
 
     func localizedName() -> String {
-        let locale = Locale.current
+        let locale = Locale(languageCode: "ko")
         let shortName = shortName()
 
+        
         guard let localizedName = locale.localizedString(forLanguageCode: shortName) else {
             return "Unknown language code"
         }
@@ -23,8 +24,7 @@ struct AvailableLanguage: Identifiable, Hashable, Comparable {
     }
 
     private func shortName() -> String {
-        //"\(locale.languageCode ?? "")-\(locale.region ?? "")"
-        "ko-\(locale.region ?? "")"
+        "\(locale.languageCode ?? "")-\(locale.region ?? "")"
     }
 
     static func <(lhs: AvailableLanguage, rhs: AvailableLanguage) -> Bool {
