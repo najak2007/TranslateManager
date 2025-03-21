@@ -23,7 +23,8 @@ struct AvailableLanguage: Identifiable, Hashable, Comparable {
     }
 
     private func shortName() -> String {
-        "\(locale.languageCode ?? "")-\(locale.region ?? "")"
+        //"\(locale.languageCode ?? "")-\(locale.region ?? "")"
+        "ko-\(locale.region ?? "")"
     }
 
     static func <(lhs: AvailableLanguage, rhs: AvailableLanguage) -> Bool {
