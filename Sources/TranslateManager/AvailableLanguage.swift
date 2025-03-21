@@ -12,7 +12,7 @@ struct AvailableLanguage: Identifiable, Hashable, Comparable {
     let locale: Locale.Language
 
     func localizedName() -> String {
-        let locale = Locale(languageCode: "ko")
+        let locale = Locale.current
         let shortName = shortName()
 
         
