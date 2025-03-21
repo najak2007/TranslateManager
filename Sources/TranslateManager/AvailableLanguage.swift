@@ -12,7 +12,8 @@ struct AvailableLanguage: Identifiable, Hashable, Comparable {
     let locale: Locale.Language
 
     func localizedName() -> String {
-        let locale = Locale.current
+        let identifier: String = NSLocale.preferredLanguages.first ?? "ko_KR"
+        let locale = Locale(identifier: identifier)
         let shortName = shortName()
 
         
